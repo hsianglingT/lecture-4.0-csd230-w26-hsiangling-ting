@@ -3,7 +3,7 @@
 #
 services:
   mysql:
-    container_name: 'mysql'
+    container_name: 'mysql-lecture4'
     image: 'mysql:latest'
     environment:
       - 'MYSQL_DATABASE=csd230'
