@@ -25,5 +25,11 @@ jobs:
         # and execute ApplicationTests.java
         run: mvn clean verify
 
-  # We will add the 'deploy' job here in Phase 5
+  # 'deploy' job here
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render
+        run: curl -f "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
 
