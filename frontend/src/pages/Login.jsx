@@ -38,82 +38,56 @@ const Login = () => {
     };
 
     return (
-        <div style={{ textAlign: "center", marginTop: "50px" }}>
-            <h1>Bookstore Admin</h1>
-            <h2>Sign In</h2>
+        <div className="login-page">
+            {/* Left branding panel */}
+            <div className="login-panel-left">
+                <div className="login-icon">📖</div>
+                <h1 className="login-title">Bookstore</h1>
+                <div className="login-divider" />
+                <p className="login-tagline">Your digital library for books, magazines, and audio books.</p>
+            </div>
 
-            {/* NEW for 2.12.1: Session Expired Warning */}
-            {isExpired && (
-                <div style={{ 
-                    backgroundColor: '#fff3cd', 
-                    color: '#856404', 
-                    padding: '12px', 
-                    borderRadius: '5px', 
-                    display: 'inline-block', 
-                    marginBottom: '20px',
-                    border: '1px solid #ffeeba',
-                    fontWeight: 'bold'
-                }}>
-                    ⚠️ Your session has expired. Please log in again to continue.
-                </div>
-            )}
+            {/* Right form panel */}
+            <div className="login-panel-right">
+                <h2>Welcome back</h2>
+                <p className="login-welcome">Sign in to your account to continue.</p>
 
-            {/* Error Message Display */}
-            {error && (
-                <p style={{ 
-                    color: "white", 
-                    backgroundColor: "#ff4444", 
-                    padding: "10px", 
-                    borderRadius: "5px", 
-                    display: "inline-block" 
-                }}>
-                    {error}
-                </p>
-            )}
-            
-            <br />
+                {isExpired && (
+                    <div className="login-alert-expired">
+                        ⚠️ Your session has expired. Please log in again to continue.
+                    </div>
+                )}
 
-            <form onSubmit={handleLogin} style={{ display: "inline-block", textAlign: "left", minWidth: "300px" }}>
-                <div style={{ marginBottom: "15px" }}>
-                    <label>Username:</label><br/>
-                    <input 
-                        type="text" 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
-                        required 
-                        style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
-                        placeholder="e.admin"
-                    />
-                    <small style={{display:"block", color:"#888", marginTop: "4px"}}>Hint: try 'admin' or 'user'</small>
-                </div>
+                {error && (
+                    <div className="login-alert-error">{error}</div>
+                )}
 
-                <div style={{ marginBottom: "20px" }}>
-                    <label>Password:</label><br/>
-                    <input 
-                        type="password" 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)} 
-                        required 
-                        style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
-                    />
-                </div>
+                <form onSubmit={handleLogin} className="login-form">
+                    <div className="login-field">
+                        <label>Username</label>
+                        <input
+                            type="text"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            placeholder="e.g. admin"
+                        />
+                        <small>Hint: try 'admin' or 'user'</small>
+                    </div>
 
-                <button 
-                    type="submit" 
-                    style={{ 
-                        width: "100%", 
-                        padding: "10px", 
-                        backgroundColor: "#007bff", 
-                        color: "white", 
-                        border: "none", 
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                        fontSize: "16px"
-                    }}
-                >
-                    Login
-                </button>
-            </form>
+                    <div className="login-field">
+                        <label>Password</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <button type="submit" className="login-btn">Sign In</button>
+                </form>
+            </div>
         </div>
     );
 };

@@ -6,19 +6,28 @@ function Navbar({ cartCount }) {
 
     return (
         <nav className="navbar">
-            <Link to="/">🏠 Home</Link>
-            <Link to="/inventory">📚 Books</Link>
-            <Link to="/magazines">📰 Magazines</Link>
-            <Link to="/cart">🛒 Cart ({cartCount})</Link>
-            
+            <div className="navbar-brand">📖 Bookstore</div>
+
+            <div className="navbar-links">
+                <Link to="/">🏠 Home</Link>
+                <Link to="/inventory">📚 Books</Link>
+                <Link to="/magazines">📰 Magazines</Link>
+                <Link to="/audiobooks">🎧 Audio Books</Link>
+            </div>
+
             {isAdmin && (
-                <>
-                    <Link to="/add">➕ Add Book</Link>
-                    <Link to="/add-magazine">➕ Add Magazine</Link>
-                </>
+                <div className="navbar-admin">
+                    <span className="navbar-admin-label">Admin</span>
+                    <Link to="/add">➕ Book</Link>
+                    <Link to="/add-magazine">➕ Magazine</Link>
+                    <Link to="/add-audiobook">➕ Audio Book</Link>
+                </div>
             )}
-            
-            <Link to="/logout" style={{ color: "#ff4444", marginLeft: "auto" }}>🚪 Logout</Link>
+
+            <div className="navbar-right">
+                <Link to="/cart" className="navbar-cart">🛒 Cart ({cartCount})</Link>
+                <Link to="/logout" className="navbar-logout">🚪 Logout</Link>
+            </div>
         </nav>
     );
 }

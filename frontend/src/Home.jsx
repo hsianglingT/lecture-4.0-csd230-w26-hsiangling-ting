@@ -1,7 +1,7 @@
 function Home() {
     return (
         <div style={{ textAlign: 'center', padding: '50px' }}>
-            <h1>Welcome to the Bookstore Admin</h1>
+            <h1>Welcome to the Hsiang's Bookstore</h1>
             <p>Use the navigation bar above to manage your digital library.</p>
             <div style={{ fontSize: '50px' }}>📖🚀</div>
         </div>
@@ -9,4 +9,3 @@ function Home() {
 }
 
 export default Home;
-

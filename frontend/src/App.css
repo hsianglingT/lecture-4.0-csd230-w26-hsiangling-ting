@@ -1,3 +1,249 @@
+/* ── Navbar ─────────────────────────────────────────── */
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #6c584c;
+  padding: 0 20px;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar a {
+  color: #f0ead2;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.navbar a:hover {
+  background-color: #a98467;
+  color: #f0ead2;
+}
+
+.navbar-brand {
+  color: #f0ead2;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  margin-right: 12px;
+  white-space: nowrap;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 4px;
+}
+
+.navbar-admin {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #a98467;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.navbar-admin-label {
+  color: #dde5b6;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-right: 4px;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.navbar-cart {
+  background-color: #adc178 !important;
+  color: #6c584c !important;
+  font-weight: 600;
+}
+
+.navbar-cart:hover {
+  background-color: #dde5b6 !important;
+}
+
+.navbar-logout {
+  color: #f0ead2 !important;
+  border: 1px solid #a98467;
+}
+
+.navbar-logout:hover {
+  background-color: #a98467 !important;
+}
+
+/* ── Login ──────────────────────────────────────────── */
+.login-page {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  z-index: 999;
+}
+
+.login-panel-left {
+  flex: 1;
+  background-color: #6c584c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 48px;
+  gap: 20px;
+}
+
+.login-panel-left .login-icon {
+  font-size: 80px;
+}
+
+.login-panel-left .login-title {
+  font-size: 2.6rem;
+  color: #f0ead2;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.login-panel-left .login-tagline {
+  font-size: 1rem;
+  color: #dde5b6;
+  margin: 0;
+  text-align: center;
+  max-width: 280px;
+  line-height: 1.6;
+}
+
+.login-panel-left .login-divider {
+  width: 48px;
+  height: 3px;
+  background-color: #adc178;
+  border-radius: 2px;
+}
+
+.login-panel-right {
+  width: 420px;
+  background-color: #f0ead2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 48px;
+}
+
+.login-panel-right h2 {
+  font-size: 1.6rem;
+  color: #6c584c;
+  margin: 0 0 8px;
+  font-weight: 700;
+  align-self: flex-start;
+}
+
+.login-panel-right .login-welcome {
+  font-size: 0.9rem;
+  color: #a98467;
+  margin: 0 0 32px;
+  align-self: flex-start;
+}
+
+.login-alert-expired {
+  background-color: #dde5b6;
+  color: #6c584c;
+  border: 1px solid #adc178;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-alert-error {
+  background-color: #ff4444;
+  color: #fff;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  font-size: 0.875rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login-field label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #6c584c;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.login-field input {
+  padding: 11px 14px;
+  border: 1px solid #adc178;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #fff;
+  color: #6c584c;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.login-field input:focus {
+  border-color: #6c584c;
+  box-shadow: 0 0 0 3px rgba(108, 88, 76, 0.12);
+}
+
+.login-field small {
+  font-size: 0.775rem;
+  color: #a98467;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #6c584c;
+  color: #f0ead2;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+}
+
+.login-btn:hover {
+  background-color: #a98467;
+  border-color: transparent;
+}
+
+/* ── Layout ─────────────────────────────────────────── */
 #root {
   max-width: 1280px;
   margin: 0 auto;

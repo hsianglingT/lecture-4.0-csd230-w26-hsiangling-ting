@@ -3,6 +3,7 @@ package csd230.bookstore;
 
 import com.github.javafaker.Commerce;
 import com.github.javafaker.Faker;
+import csd230.bookstore.entities.AudioBookEntity;
 import csd230.bookstore.entities.BookEntity;
 import csd230.bookstore.entities.CartEntity;
 import csd230.bookstore.entities.UserEntity;
@@ -85,19 +86,38 @@ public class Application implements CommandLineRunner {
         UserEntity admin = new UserEntity("admin", passwordEncoder.encode("admin"), "ADMIN");
         userRepository.save(admin);
 
-
         // Regular User (Can only View/Buy)
         UserEntity user = new UserEntity("user", passwordEncoder.encode("user"), "USER");
         userRepository.save(user);
 
-
         System.out.println("Default users created: admin/admin and user/user");
 
-        // Check if a cart exists, if not, create one
-        if (cartRepository.count() == 0) {
-            CartEntity defaultCart = new CartEntity();
-            cartRepository.save(defaultCart);
-            System.out.println("Default Cart created with ID: " + defaultCart.getId());
+        // Create one cart per user
+        CartEntity adminCart = new CartEntity();
+        adminCart.setUser(admin);
+        cartRepository.save(adminCart);
+
+        CartEntity userCart = new CartEntity();
+        userCart.setUser(user);
+        cartRepository.save(userCart);
+
+        System.out.println("Created individual carts for admin and user");
+
+        // ------------------------------------
+        // CREATE AUDIO BOOKS
+        // ------------------------------------
+        String[] narrators = { "John Smith", "Jane Doe", "Michael Brown", "Emily Clark", "David Lee" };
+        for (int i = 0; i < 5; i++) {
+            String title = faker.book().title();
+            String author = faker.book().author();
+            double price = Double.parseDouble(faker.commerce().price());
+            String narrator = narrators[i];
+            String downloadUrl = "https://downloads.bookstore.com/audiobooks/" + title.toLowerCase().replace(" ", "-") + ".mp3";
+
+            AudioBookEntity audioBook = new AudioBookEntity(title, author, price, downloadUrl, narrator);
+            productRepository.save(audioBook);
+
+            System.out.println("Saved AudioBook " + (i + 1) + ": " + title + " narrated by " + narrator);
         }
     }
     @Bean

@@ -7,6 +7,8 @@ import BookForm from './BookForm';
 import Magazine from './Magazine';
 import MagazineForm from './MagazineForm';
 import Cart from './Cart';
+import AudioBook from './AudioBook';
+import AudioBookForm from './AudioBookForm';
 import Login from './pages/Login';       // NEW
 import Logout from './pages/Logout';     // NEW
 import { ProtectedRoute } from './routes/ProtectedRoute'; // NEW
@@ -16,7 +18,8 @@ import './App.css';
 function App() {
     const { token } = useAuth(); // Get auth state
     const [books, setBooks] = useState([]);
-    const[magazines, setMagazines] = useState([]);
+    const [magazines, setMagazines] = useState([]);
+    const [audioBooks, setAudioBooks] = useState([]);
     const [cartCount, setCartCount] = useState(0);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
@@ -27,13 +30,15 @@ function App() {
         }
         const loadInitialData = async () => {
             try {
-                const [booksRes, magsRes, cartRes] = await Promise.all([
+                const [booksRes, magsRes, audioBooksRes, cartRes] = await Promise.all([
                     api.get('/books'),
                     api.get('/magazines'),
+                    api.get('/audiobooks'),
                     api.get('/cart')
                 ]);
                 setBooks(booksRes.data);
                 setMagazines(magsRes.data);
+                setAudioBooks(audioBooksRes.data);
                 setCartCount(cartRes.data.products.length);
             } catch (err) {
                 console.error("Failed to load data", err);
@@ -97,9 +102,22 @@ function App() {
                             ))}
                         </div>
                     } />
+                    <Route path="/audiobooks" element={
+                        <div className="book-list">
+                            <h1>Audio Books</h1>
+                            {audioBooks.map(a => (
+                                <AudioBook key={a.id} {...a}
+                                    onAddToCart={handleAddToCart}
+                                    onDelete={(id) => api.delete(`/audiobooks/${id}`).then(() => setAudioBooks(audioBooks.filter(ab => ab.id !== id)))}
+                                    onUpdate={(id, data) => api.put(`/audiobooks/${id}`, data).then(res => setAudioBooks(audioBooks.map(ab => ab.id === id ? res.data : ab)))}
+                                />
+                            ))}
+                        </div>
+                    } />
                     <Route path="/cart" element={<Cart api={api} onCartChange={(count) => setCartCount(count)} />} />
                     <Route path="/add" element={<BookForm onBookAdded={(b) => setBooks([...books, b])} api={api} />} />
                     <Route path="/add-magazine" element={<MagazineForm onMagazineAdded={(m) => setMagazines([...magazines, m])} api={api} />} />
+                    <Route path="/add-audiobook" element={<AudioBookForm onAudioBookAdded={(a) => setAudioBooks([...audioBooks, a])} api={api} />} />
                     <Route path="/logout" element={<Logout />} />
                 </Route>
             </Routes>
