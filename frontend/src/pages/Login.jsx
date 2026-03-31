@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router"; 
+import { useNavigate, useLocation, Link } from "react-router";
 import { useAuth } from "../provider/authProvider";
 import api from "../api/axiosConfig";
 
@@ -87,6 +87,10 @@ const Login = () => {
 
                     <button type="submit" className="login-btn">Sign In</button>
                 </form>
+
+                <p style={{ marginTop: '12px' }}>
+                    Don't have an account? <Link to="/register">Register</Link>
+                </p>
             </div>
         </div>
     );

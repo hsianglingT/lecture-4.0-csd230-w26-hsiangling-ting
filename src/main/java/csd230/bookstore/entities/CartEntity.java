@@ -2,8 +2,8 @@ package csd230.bookstore.entities;
 
 import jakarta.persistence.*;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cart_entity")
@@ -17,14 +17,15 @@ public class CartEntity {
     @JoinColumn(name = "user_id", unique = true)
     private UserEntity user;
 
-    // linkedhashset for NO duplicate items
+    // list allows duplicate items (same product added multiple times)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "cart_products",
             joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private Set<ProductEntity> products = new LinkedHashSet<>();
+    @OrderColumn(name = "product_order")
+    private List<ProductEntity> products = new ArrayList<>();
 
     public void addProduct(ProductEntity product) {
         this.products.add(product);
@@ -35,11 +36,11 @@ public class CartEntity {
         return id;
     }
 
-    public Set<ProductEntity> getProducts() {
+    public List<ProductEntity> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<ProductEntity> products) {
+    public void setProducts(List<ProductEntity> products) {
         this.products = products;
     }
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from './provider/authProvider';
 
-function Book({ id, title, author, price, onDelete, onUpdate, onAddToCart }) {
+function Book({ id, title, author, price, copies, onDelete, onUpdate, onAddToCart }) {
     const { isAdmin } = useAuth(); 
     const [isEditing, setIsEditing] = useState(false);
     const [tempTitle, setTempTitle] = useState(title);
@@ -33,7 +33,10 @@ function Book({ id, title, author, price, onDelete, onUpdate, onAddToCart }) {
                 <p><strong>Author:</strong> {author} | <strong>Price:</strong> ${Number(price).toFixed(2)}</p>
             </div>
             <div className="book-actions">
-                <button onClick={() => onAddToCart(id)} style={{ backgroundColor: '#28a745', color: 'white' }}>🛒 Add to Cart</button>
+                {copies === 0
+                    ? <span style={{ color: 'red', fontWeight: 'bold' }}>SOLD OUT</span>
+                    : <button onClick={() => onAddToCart(id)} style={{ backgroundColor: '#28a745', color: 'white' }}>🛒 Add to Cart</button>
+                }
                 {isAdmin && (
                     <>
                         <button onClick={() => setIsEditing(true)} style={{ backgroundColor: '#ffc107' }}>Edit</button>

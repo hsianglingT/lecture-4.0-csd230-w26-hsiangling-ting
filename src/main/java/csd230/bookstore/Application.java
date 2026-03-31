@@ -6,11 +6,13 @@ import com.github.javafaker.Faker;
 import csd230.bookstore.entities.AudioBookEntity;
 import csd230.bookstore.entities.BookEntity;
 import csd230.bookstore.entities.CartEntity;
+import csd230.bookstore.entities.MagazineEntity;
 import csd230.bookstore.entities.UserEntity;
 import csd230.bookstore.repositories.CartEntityRepository;
 import csd230.bookstore.repositories.ProductEntityRepository;
 import csd230.bookstore.repositories.UserEntityRepository;
 import jakarta.transaction.Transactional;
+import java.time.LocalDateTime;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -117,8 +119,28 @@ public class Application implements CommandLineRunner {
             AudioBookEntity audioBook = new AudioBookEntity(title, author, price, downloadUrl, narrator);
             productRepository.save(audioBook);
 
-            System.out.println("Saved AudioBook " + (i + 1) + ": " + title + " narrated by " + narrator);
+                System.out.println("Saved AudioBook " + (i + 1) + ": " + title + " narrated by " + narrator);
         }
+
+        // ------------------------------------
+        // CREATE MAGAZINES
+        // ------------------------------------
+        MagazineEntity mag1 = new MagazineEntity(
+                "National Geographic", 9.99, 50, 100,
+                LocalDateTime.of(2026, 3, 1, 0, 0));
+        productRepository.save(mag1);
+
+        MagazineEntity mag2 = new MagazineEntity(
+                "Scientific American", 7.99, 40, 80,
+                LocalDateTime.of(2026, 2, 1, 0, 0));
+        productRepository.save(mag2);
+
+        MagazineEntity mag3 = new MagazineEntity(
+                "The Economist", 6.99, 30, 60,
+                LocalDateTime.of(2026, 1, 1, 0, 0));
+        productRepository.save(mag3);
+
+        System.out.println("Saved 3 magazines: National Geographic, Scientific American, The Economist");
     }
     @Bean
     public WebMvcConfigurer corsConfigurer() {
