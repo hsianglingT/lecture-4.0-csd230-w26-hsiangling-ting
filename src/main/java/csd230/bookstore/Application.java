@@ -109,7 +109,7 @@ public class Application implements CommandLineRunner {
         // CREATE AUDIO BOOKS
         // ------------------------------------
         String[] narrators = { "John Smith", "Jane Doe", "Michael Brown", "Emily Clark", "David Lee" };
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 4; i++) {
             String title = faker.book().title();
             String author = faker.book().author();
             double price = Double.parseDouble(faker.commerce().price());
