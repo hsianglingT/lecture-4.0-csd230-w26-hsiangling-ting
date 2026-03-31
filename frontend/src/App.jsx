@@ -7,9 +7,11 @@ import BookForm from './BookForm';
 import Magazine from './Magazine';
 import MagazineForm from './MagazineForm';
 import Cart from './Cart';
+import OrderHistory from './OrderHistory';
 import AudioBook from './AudioBook';
 import AudioBookForm from './AudioBookForm';
 import Login from './pages/Login';       // NEW
+import Register from './pages/Register'; // NEW
 import Logout from './pages/Logout';     // NEW
 import { ProtectedRoute } from './routes/ProtectedRoute'; // NEW
 import { useAuth } from './provider/authProvider';        // NEW
@@ -22,6 +24,22 @@ function App() {
     const [audioBooks, setAudioBooks] = useState([]);
     const [cartCount, setCartCount] = useState(0);
     const [loading, setLoading] = useState(true);
+
+    const refreshProducts = async () => {
+        try {
+            const [booksRes, magsRes, audioBooksRes] = await Promise.all([
+                api.get('/books'),
+                api.get('/magazines'),
+                api.get('/audiobooks'),
+            ]);
+            setBooks(booksRes.data);
+            setMagazines(magsRes.data);
+            setAudioBooks(audioBooksRes.data);
+        } catch (err) {
+            console.error("Failed to refresh products", err);
+        }
+    };
+
     useEffect(() => {
         // If no token exists, don't attempt to fetch secure data
         if (!token) {
@@ -75,6 +93,7 @@ function App() {
             <Routes>
                 {/* 1. PUBLIC ROUTES */}
                 <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 
                 {/* 2. PROTECTED ROUTES */}
                 <Route element={<ProtectedRoute />}>
@@ -114,7 +133,8 @@ function App() {
                             ))}
                         </div>
                     } />
-                    <Route path="/cart" element={<Cart api={api} onCartChange={(count) => setCartCount(count)} />} />
+                    <Route path="/cart" element={<Cart api={api} onCartChange={(count) => setCartCount(count)} onCheckout={refreshProducts} />} />
+                    <Route path="/orders" element={<OrderHistory api={api} />} />
                     <Route path="/add" element={<BookForm onBookAdded={(b) => setBooks([...books, b])} api={api} />} />
                     <Route path="/add-magazine" element={<MagazineForm onMagazineAdded={(m) => setMagazines([...magazines, m])} api={api} />} />
                     <Route path="/add-audiobook" element={<AudioBookForm onAudioBookAdded={(a) => setAudioBooks([...audioBooks, a])} api={api} />} />

@@ -2,10 +2,12 @@ package csd230.bookstore.controllers;
 
 import csd230.bookstore.entities.CartEntity;
 import csd230.bookstore.entities.ProductEntity;
+import csd230.bookstore.entities.PublicationEntity;
 import csd230.bookstore.entities.UserEntity;
 import csd230.bookstore.repositories.CartEntityRepository;
 import csd230.bookstore.repositories.ProductEntityRepository;
 import csd230.bookstore.repositories.UserEntityRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,8 +40,25 @@ public class CartRestController {
     public CartEntity addToCart(@PathVariable Long productId) {
         CartEntity cart = getCurrentUserCart();
         ProductEntity product = productRepository.findById(productId).orElseThrow();
+
+        if (product instanceof PublicationEntity pub) {
+            long inCart = cart.getProducts().stream()
+                    .filter(p -> p.getId().equals(productId))
+                    .count();
+            if (inCart >= pub.getCopies()) {
+                throw new IllegalStateException(
+                        "Cannot add more '" + pub.getTitle() + "'. Only " + pub.getCopies() + " cop" +
+                        (pub.getCopies() == 1 ? "y" : "ies") + " available.");
+            }
+        }
+
         cart.addProduct(product);
         return cartRepository.save(cart);
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<String> handleIllegalState(IllegalStateException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
     @DeleteMapping("/remove/{productId}")
