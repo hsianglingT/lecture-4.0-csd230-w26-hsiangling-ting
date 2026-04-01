@@ -25,6 +25,7 @@ function Navbar({ cartCount }) {
             )}
 
             <div className="navbar-right">
+                <Link to="/orders">📋 Orders</Link>
                 <Link to="/cart" className="navbar-cart">🛒 Cart ({cartCount})</Link>
                 <Link to="/logout" className="navbar-logout">🚪 Logout</Link>
             </div>

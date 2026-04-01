@@ -82,12 +82,10 @@ function Magazine({ id, title, price, copies, orderQty, currentIssue, onDelete, 
             </div>
             <div className="book-actions">
                 {/* PUBLIC ACTION: Available to all authenticated users */}
-                <button 
-                    onClick={() => onAddToCart(id)} 
-                    style={{ backgroundColor: '#28a745', color: 'white' }}
-                >
-                    🛒 Add to Cart
-                </button>
+                {copies === 0
+                    ? <span style={{ color: 'red', fontWeight: 'bold' }}>SOLD OUT</span>
+                    : <button onClick={() => onAddToCart(id)} style={{ backgroundColor: '#28a745', color: 'white' }}>🛒 Add to Cart</button>
+                }
 
                 {/* ROLE-BASED ACTIONS: Only visible if the JWT contains ROLE_ADMIN */}
                 {isAdmin && (
