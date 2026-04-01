@@ -126,17 +126,17 @@ public class Application implements CommandLineRunner {
         // CREATE MAGAZINES
         // ------------------------------------
         MagazineEntity mag1 = new MagazineEntity(
-                "National Geographic", 9.99, 50, 100,
+                "National Geographic", 9.99, 10, 100,
                 LocalDateTime.of(2026, 3, 1, 0, 0));
         productRepository.save(mag1);
 
         MagazineEntity mag2 = new MagazineEntity(
-                "Scientific American", 7.99, 40, 80,
+                "Scientific American", 7.99, 10, 80,
                 LocalDateTime.of(2026, 2, 1, 0, 0));
         productRepository.save(mag2);
 
         MagazineEntity mag3 = new MagazineEntity(
-                "The Economist", 6.99, 30, 60,
+                "The Economist", 6.99, 10, 60,
                 LocalDateTime.of(2026, 1, 1, 0, 0));
         productRepository.save(mag3);
 

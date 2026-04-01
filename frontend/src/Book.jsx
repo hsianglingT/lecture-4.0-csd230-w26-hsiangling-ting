@@ -7,9 +7,10 @@ function Book({ id, title, author, price, copies, onDelete, onUpdate, onAddToCar
     const [tempTitle, setTempTitle] = useState(title);
     const [tempAuthor, setTempAuthor] = useState(author);
     const [tempPrice, setTempPrice] = useState(price);
+    const [tempCopies, setTempCopies] = useState(copies);
 
     const handleSave = () => {
-        const updatedBook = { id, title: tempTitle, author: tempAuthor, price: parseFloat(tempPrice), copies: 10 };
+        const updatedBook = { id, title: tempTitle, author: tempAuthor, price: parseFloat(tempPrice), copies: parseInt(tempCopies) };
         onUpdate(id, updatedBook);
         setIsEditing(false);
     };
@@ -20,6 +21,7 @@ function Book({ id, title, author, price, copies, onDelete, onUpdate, onAddToCar
                 <input type="text" value={tempTitle} onChange={(e) => setTempTitle(e.target.value)} />
                 <input type="text" value={tempAuthor} onChange={(e) => setTempAuthor(e.target.value)} />
                 <input type="number" value={tempPrice} onChange={(e) => setTempPrice(e.target.value)} />
+                <input type="number" value={tempCopies} onChange={(e) => setTempCopies(e.target.value)} placeholder="Copies" style={{width: '70px'}} />
                 <button onClick={handleSave} className="btn-save">Save</button>
                 <button onClick={() => setIsEditing(false)}>Cancel</button>
             </div>
@@ -33,7 +35,7 @@ function Book({ id, title, author, price, copies, onDelete, onUpdate, onAddToCar
                 <p><strong>Author:</strong> {author} | <strong>Price:</strong> ${Number(price).toFixed(2)}</p>
             </div>
             <div className="book-actions">
-                {copies === 0
+                {tempCopies === 0
                     ? <span style={{ color: 'red', fontWeight: 'bold' }}>SOLD OUT</span>
                     : <button onClick={() => onAddToCart(id)} style={{ backgroundColor: '#28a745', color: 'white' }}>🛒 Add to Cart</button>
                 }
