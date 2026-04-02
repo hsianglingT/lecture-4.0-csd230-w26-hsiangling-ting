@@ -234,7 +234,11 @@ class _ProductsScreenState extends State<ProductsScreen> with SingleTickerProvid
       child: ListTile(
         leading: const Icon(Icons.book, color: Colors.indigo),
         title: Text(b['title'] ?? ''),
-        subtitle: Text('${b['author'] ?? ''}  •  \$${(b['price'] as num).toStringAsFixed(2)}  •  Copies: ${b['copies'] ?? '?'}'),
+        subtitle: Text(
+          _isAdmin
+              ? '${b['author'] ?? ''}  •  \$${(b['price'] as num).toStringAsFixed(2)}  •  Copies: ${b['copies'] ?? '?'}'
+              : '${b['author'] ?? ''}  •  \$${(b['price'] as num).toStringAsFixed(2)}',
+        ),
         trailing: _isAdmin
             ? Row(mainAxisSize: MainAxisSize.min, children: [
                 IconButton(icon: const Icon(Icons.edit, color: Colors.orange), onPressed: () => _showBookForm(book: b)),
@@ -243,7 +247,6 @@ class _ProductsScreenState extends State<ProductsScreen> with SingleTickerProvid
             : soldOut
                 ? const Text('SOLD OUT', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold))
                 : IconButton(icon: const Icon(Icons.add_shopping_cart, color: Colors.green), onPressed: () => _addToCart(b['id'])),
-        // Non-admin still gets add-to-cart below if not sold out when admin column not shown
       ),
     );
   }
@@ -256,7 +259,11 @@ class _ProductsScreenState extends State<ProductsScreen> with SingleTickerProvid
       child: ListTile(
         leading: const Icon(Icons.newspaper, color: Colors.teal),
         title: Text(m['title'] ?? ''),
-        subtitle: Text('Issue: $issue  •  \$${(m['price'] as num).toStringAsFixed(2)}  •  Copies: ${m['copies'] ?? '?'}'),
+        subtitle: Text(
+          _isAdmin
+              ? 'Issue: $issue  •  \$${(m['price'] as num).toStringAsFixed(2)}  •  Copies: ${m['copies'] ?? '?'}'
+              : 'Issue: $issue  •  \$${(m['price'] as num).toStringAsFixed(2)}',
+        ),
         trailing: _isAdmin
             ? Row(mainAxisSize: MainAxisSize.min, children: [
                 IconButton(icon: const Icon(Icons.edit, color: Colors.orange), onPressed: () => _showMagazineForm(magazine: m)),
