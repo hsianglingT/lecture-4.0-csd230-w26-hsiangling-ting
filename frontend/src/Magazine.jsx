@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from './provider/authProvider'; // NEW: Added for RBAC
 
-function Magazine({ id, title, price, copies, orderQty, currentIssue, onDelete, onUpdate, onAddToCart }) {
+function Magazine({ id, title, price, copies, currentIssue, onDelete, onUpdate, onAddToCart }) {
     // NEW for 2.12.1: Get the admin status from our Auth Context
     const { isAdmin } = useAuth();
 
@@ -15,7 +15,7 @@ function Magazine({ id, title, price, copies, orderQty, currentIssue, onDelete, 
     const [isEditing, setIsEditing] = useState(false);
     const [tempTitle, setTempTitle] = useState(title);
     const [tempPrice, setTempPrice] = useState(price);
-    const [tempOrder, setTempOrder] = useState(orderQty);
+    const [tempCopies, setTempCopies] = useState(copies);
     const [tempIssue, setTempIssue] = useState(formatIssueDate(currentIssue));
 
     const handleSave = () => {
@@ -23,8 +23,7 @@ function Magazine({ id, title, price, copies, orderQty, currentIssue, onDelete, 
             id,
             title: tempTitle,
             price: parseFloat(tempPrice),
-            copies: copies,
-            orderQty: parseInt(tempOrder),
+            copies: parseInt(tempCopies),
             // Ensure seconds are included to satisfy the backend's @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
             currentIssue: tempIssue.length === 16 ? tempIssue + ":00" : tempIssue
         };
@@ -50,16 +49,17 @@ function Magazine({ id, title, price, copies, orderQty, currentIssue, onDelete, 
                     onChange={(e) => setTempPrice(e.target.value)} 
                     placeholder="Price"
                 />
-                <input 
-                    type="number" 
-                    value={tempOrder} 
-                    onChange={(e) => setTempOrder(e.target.value)} 
-                    placeholder="Order Qty"
+                <input
+                    type="number"
+                    value={tempCopies}
+                    onChange={(e) => setTempCopies(e.target.value)}
+                    placeholder="Copies"
+                    style={{width: '70px'}}
                 />
-                <input 
-                    type="datetime-local" 
-                    value={tempIssue} 
-                    onChange={(e) => setTempIssue(e.target.value)} 
+                <input
+                    type="datetime-local"
+                    value={tempIssue}
+                    onChange={(e) => setTempIssue(e.target.value)}
                 />
                 <div className="book-actions">
                     <button onClick={handleSave} className="btn-save">Save</button>
@@ -77,12 +77,11 @@ function Magazine({ id, title, price, copies, orderQty, currentIssue, onDelete, 
                 <p>
                     <strong>Issue:</strong> {formatIssueDate(currentIssue).replace('T', ' ')} | 
                     <strong>Price:</strong> ${Number(price).toFixed(2)} | 
-                    <strong>Order Qty:</strong> {orderQty}
                 </p>
             </div>
             <div className="book-actions">
                 {/* PUBLIC ACTION: Available to all authenticated users */}
-                {copies === 0
+                {tempCopies === 0
                     ? <span style={{ color: 'red', fontWeight: 'bold' }}>SOLD OUT</span>
                     : <button onClick={() => onAddToCart(id)} style={{ backgroundColor: '#28a745', color: 'white' }}>🛒 Add to Cart</button>
                 }

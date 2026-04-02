@@ -4,7 +4,6 @@ function MagazineForm({ onMagazineAdded, api }) {
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
     const [copies, setCopies] = useState(10);
-    const [orderQty, setOrderQty] = useState(100);
     const [currentIssue, setCurrentIssue] = useState('');
 
     const handleSubmit = async (e) => {
@@ -22,7 +21,6 @@ function MagazineForm({ onMagazineAdded, api }) {
             title,
             price: parseFloat(price || 0),
             copies: parseInt(copies),
-            orderQty: parseInt(orderQty),
             currentIssue: formattedDate
         };
 
@@ -39,7 +37,6 @@ function MagazineForm({ onMagazineAdded, api }) {
             setTitle('');
             setPrice('');
             setCopies(10);
-            setOrderQty(100);
             setCurrentIssue('');
         } catch (err) {
             console.error("Save Error:", err.response?.data || err.message);
@@ -57,7 +54,6 @@ function MagazineForm({ onMagazineAdded, api }) {
 
                 <div style={{ display: 'flex', gap: '10px' }}>
                     <label>Copies: <input type="number" value={copies} onChange={(e) => setCopies(e.target.value)} required style={{width: '70px'}}/></label>
-                    <label>Order Qty: <input type="number" value={orderQty} onChange={(e) => setOrderQty(e.target.value)} required style={{width: '70px'}}/></label>
                 </div>
 
                 <label>
